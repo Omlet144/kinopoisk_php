@@ -1,34 +1,42 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'orm/Controllers/Controller.php';
-include_once 'orm/Models/ganre.php';
-class GanreController extends Controller {
-    public function add($model)
-    {
-        if(!($model instanceof ganre))
-        {throw new \InvalidArgumentException("Wrong type!");}
+include_once 'db/Controllers/Controller.php';
+include_once 'db/Models/subscription.php';
+class SubscriptionController extends Controller {
+    public function add($model){
+        if(!($model instanceof subscription))
+            throw new \InvalidArgumentException("Wrong type!");
+
         $conn = $this->connection->getConn();
+
         try
         {
             $name = $model->Name;
-            $sql_ins = "INSERT INTO `ganre` (Name) VALUES ('$name')";
-            if($conn->query($sql_ins)) {
+
+            $sql_ins = "INSERT INTO `subscription` (Name) VALUES ('$name')";
+
+            if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
             }
             else{
-                echo '<p>Not added!</p>';
+                echo '<p>Not deleted!</p>';
             }
         }
-        catch (InvalidArgumentException) {
+        catch (InvalidArgumentException)
+        {
             echo '<p>Database error</p>';
         }
-        finally {$conn?->close();}
+        finally {
+            $conn?->close();
+        }
     }
     public function removeById($id)
     {
         $conn = $this->connection->getConn();
+
         try {
-            $del = "DELETE FROM `ganre` WHERE Id='$id';";
+            $del = "DELETE FROM `subscription` WHERE Id='$id';";
+
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
@@ -44,27 +52,21 @@ class GanreController extends Controller {
             $conn->close();
         }
     }
-    public function removeByModel($model)
-    {
-        if(!($model instanceof ganre))
-            throw new \InvalidArgumentException("Wrong type!");
-        $id = $model->Id;
-        $this->removeById($id);
-    }
     public function updateById($id, $newModel)
     {
-        if(!($newModel instanceof ganre)) {
+        if(!($newModel instanceof subscription))
             throw new \InvalidArgumentException("Wrong type!");
-        }
+
         $conn = $this->connection->getConn();
-        try{
+
+        try {
             $name = $newModel->Name;
-            $update = "UPDATE `ganre` SET Name='$name' WHERE Id='$id'";
-            if($conn->query($update)){
+            $upd = "UPDATE `subscription` SET Name='$name' WHERE Id='$id'";
+            if($conn->query($upd)){
                 echo '<p>updated!</p>';
             }
             else{
-                echo '<p>Not updated!</p>';
+                echo '<p>Not deleted!</p>';
             }
         }
         catch (InvalidArgumentException)
@@ -75,9 +77,16 @@ class GanreController extends Controller {
             $conn->close();
         }
     }
+    public function removeByModel($model)
+    {
+        if(!($model instanceof subscription))
+            throw new \InvalidArgumentException("Wrong type!");
+        $id = $model->Id;
+        $this->removeById($id);
+    }
     public function updateByModel($oldModel, $newModel)
     {
-        if(!($oldModel instanceof ganre))
+        if(!($oldModel instanceof subscription))
             throw new \InvalidArgumentException("Wrong type!");
         $id = $oldModel->Id;
         $this->updateById($id, $newModel);
@@ -87,7 +96,7 @@ class GanreController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `ganre` WHERE id='$id'";
+            $select = "SELECT * FROM `subscription` WHERE id='$id'";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
@@ -102,6 +111,7 @@ class GanreController extends Controller {
             }
             echo    "</table>";
             $res->free();
+
         }
         catch (InvalidArgumentException)
         {
@@ -116,7 +126,7 @@ class GanreController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `ganre` WHERE $text";
+            $select = "SELECT * FROM `subscription` WHERE ".$text;
             $res = $conn->query($select);
             echo "<table>
                     <tr>
@@ -145,7 +155,7 @@ class GanreController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `ganre`";
+            $select = "SELECT * FROM `subscription`";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
@@ -154,8 +164,8 @@ class GanreController extends Controller {
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
-                    '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['Name'].'</td>'.
+                        '<td>'.$iter['Id'].'</td>'.
+                        '<td>'.$iter['Name'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";

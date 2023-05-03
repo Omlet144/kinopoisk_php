@@ -1,17 +1,23 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'orm/Controllers/Controller.php';
-include_once 'orm/Models/role.php';
-class RoleController extends Controller {
+include_once 'db/Controllers/Controller.php';
+include_once 'db/Models/movie.php';
+class MovieControllers extends Controller {
     public function add($model)
     {
-        if(!($model instanceof role))
+        if(!($model instanceof movie))
         {throw new \InvalidArgumentException("Wrong type!");}
         $conn = $this->connection->getConn();
         try
         {
-            $name_role = $model->Name_role;
-            $sql_ins = "INSERT INTO `role` (Name_role) VALUES ('$name_role')";
+            $name_movie = $model->Name_movie;
+            $country = $model->Country;
+            $participantId = $model->ParticipantId;
+            $ganreId = $model->GanreId;
+            $year = $model->Year;
+            $imdb = $model->IMDB;
+            $subscriptionId = $model->SubscriptionId;
+            $sql_ins = "INSERT INTO `movie` (Name_movie, Country, ParticipantId, GanreId, Year, IMDB, SubscriptionId) VALUES ('$name_movie','$country','$participantId','$ganreId','$year','$imdb','$subscriptionId')";
             if($conn->query($sql_ins)) {
                 echo '<p>added!</p>';
             }
@@ -28,7 +34,7 @@ class RoleController extends Controller {
     {
         $conn = $this->connection->getConn();
         try {
-            $del = "DELETE FROM `role` WHERE Id='$id';";
+            $del = "DELETE FROM `movie` WHERE Id='$id';";
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
@@ -46,20 +52,26 @@ class RoleController extends Controller {
     }
     public function removeByModel($model)
     {
-        if(!($model instanceof role))
+        if(!($model instanceof movie))
             throw new \InvalidArgumentException("Wrong type!");
         $id = $model->Id;
         $this->removeById($id);
     }
     public function updateById($id, $newModel)
     {
-        if(!($newModel instanceof role)) {
+        if(!($newModel instanceof movie)) {
             throw new \InvalidArgumentException("Wrong type!");
         }
         $conn = $this->connection->getConn();
         try{
-            $name_role = $newModel->Name_role;
-            $update = "UPDATE `role` SET Name_role='$name_role' WHERE Id='$id'";
+            $name_movie = $newModel->Name_movie;
+            $country = $newModel->Country;
+            $participantId = $newModel->ParticipantId;
+            $ganreId = $newModel->GanreId;
+            $year = $newModel->Year;
+            $imdb = $newModel->IMDB;
+            $subscriptionId = $newModel->SubscriptionId;
+            $update = "UPDATE `movie` SET Name_movie='$name_movie',Country='$country',ParticipantId='$participantId',GanreId='$ganreId',Year='$year',IMDB='$imdb',SubscriptionId='$subscriptionId' WHERE Id='$id'";
             if($conn->query($update)){
                 echo '<p>updated!</p>';
             }
@@ -77,7 +89,7 @@ class RoleController extends Controller {
     }
     public function updateByModel($oldModel, $newModel)
     {
-        if(!($oldModel instanceof role))
+        if(!($oldModel instanceof movie))
             throw new \InvalidArgumentException("Wrong type!");
         $id = $oldModel->Id;
         $this->updateById($id, $newModel);
@@ -87,17 +99,29 @@ class RoleController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `role` WHERE id='$id'";
+            $select = "SELECT * FROM `movie` WHERE id='$id'";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name_role</th>
+                        <th>Name_movie</th>
+                        <th>Country</th>
+                        <th>ParticipantId</th>
+                        <th>GanreId</th>
+                        <th>Year</th>
+                        <th>IMDB</th>
+                        <th>SubscriptionId</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['Name_role'].'</td>'.
+                    '<td>'.$iter['Name_movie'].'</td>'.
+                    '<td>'.$iter['Country'].'</td>'.
+                    '<td>'.$iter['ParticipantId'].'</td>'.
+                    '<td>'.$iter['GanreId'].'</td>'.
+                    '<td>'.$iter['Year'].'</td>'.
+                    '<td>'.$iter['IMDB'].'</td>'.
+                    '<td>'.$iter['SubscriptionId'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
@@ -116,17 +140,29 @@ class RoleController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `role` WHERE $text";
+            $select = "SELECT * FROM `movie` WHERE $text";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name_role</th>
+                        <th>Name_movie</th>
+                        <th>Country</th>
+                        <th>ParticipantId</th>
+                        <th>GanreId</th>
+                        <th>Year</th>
+                        <th>IMDB</th>
+                        <th>SubscriptionId</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['Name_role'].'</td>'.
+                    '<td>'.$iter['Name_movie'].'</td>'.
+                    '<td>'.$iter['Country'].'</td>'.
+                    '<td>'.$iter['ParticipantId'].'</td>'.
+                    '<td>'.$iter['GanreId'].'</td>'.
+                    '<td>'.$iter['Year'].'</td>'.
+                    '<td>'.$iter['IMDB'].'</td>'.
+                    '<td>'.$iter['SubscriptionId'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
@@ -145,17 +181,29 @@ class RoleController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `role`";
+            $select = "SELECT * FROM `movie`";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name_role</th>
+                        <th>Name_movie</th>
+                        <th>Country</th>
+                        <th>ParticipantId</th>
+                        <th>GanreId</th>
+                        <th>Year</th>
+                        <th>IMDB</th>
+                        <th>SubscriptionId</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['Name_role'].'</td>'.
+                    '<td>'.$iter['Name_movie'].'</td>'.
+                    '<td>'.$iter['Country'].'</td>'.
+                    '<td>'.$iter['ParticipantId'].'</td>'.
+                    '<td>'.$iter['GanreId'].'</td>'.
+                    '<td>'.$iter['Year'].'</td>'.
+                    '<td>'.$iter['IMDB'].'</td>'.
+                    '<td>'.$iter['SubscriptionId'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";

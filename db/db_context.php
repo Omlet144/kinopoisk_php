@@ -1,10 +1,10 @@
 <?php
-include_once 'orm/Controllers/AuthorizationController.php';
-include_once 'orm/Controllers/SubscriptionController.php';
-include_once 'orm/Controllers/GanreController.php';
-include_once 'orm/Controllers/ParticipantController.php';
-include_once 'orm/Controllers/MovieControllers.php';
-include_once 'orm/Controllers/RoleController.php';
+include_once 'db/Controllers/AuthorizationController.php';
+include_once 'db/Controllers/SubscriptionController.php';
+include_once 'db/Controllers/GanreController.php';
+include_once 'db/Controllers/ParticipantController.php';
+include_once 'db/Controllers/MovieControllers.php';
+include_once 'db/Controllers/RoleController.php';
 class db_context{
     private $conn;
     private $authorizationController;

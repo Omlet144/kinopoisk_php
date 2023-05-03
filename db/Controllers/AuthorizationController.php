@@ -1,18 +1,18 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'orm/Controllers/Controller.php';
-include_once 'orm/Models/participant.php';
-class ParticipantController extends Controller {
-    public function add($model)
-    {
-        if(!($model instanceof participant))
+include_once 'db/Controllers/Controller.php';
+include_once 'db/Models/authorization.php';
+class AuthorizationController extends Controller {
+    public function add($model){
+        if(!($model instanceof authorization))
         {throw new \InvalidArgumentException("Wrong type!");}
         $conn = $this->connection->getConn();
         try
         {
-            $name_participant = $model->Name_participant;
-            $roleId = $model->RoleId;
-            $sql_ins = "INSERT INTO `participant` (Name_participant, RoleId) VALUES ('$name_participant', '$roleId')";
+            $login = $model->login;
+            $pass = $model->password;
+            $subscription = $model->subscriptionId;
+            $sql_ins = "INSERT INTO `authorization` (login, password, subscriptionId) VALUES ('$login', '$pass', '$subscription')";
             if($conn->query($sql_ins)) {
                 echo '<p>added!</p>';
             }
@@ -29,7 +29,7 @@ class ParticipantController extends Controller {
     {
         $conn = $this->connection->getConn();
         try {
-            $del = "DELETE FROM `participant` WHERE Id='$id';";
+            $del = "DELETE FROM `authorization` WHERE Id='$id';";
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
@@ -47,21 +47,22 @@ class ParticipantController extends Controller {
     }
     public function removeByModel($model)
     {
-        if(!($model instanceof participant))
+        if(!($model instanceof authorization))
             throw new \InvalidArgumentException("Wrong type!");
         $id = $model->Id;
         $this->removeById($id);
     }
     public function updateById($id, $newModel)
     {
-        if(!($newModel instanceof participant)) {
+        if(!($newModel instanceof authorization)) {
             throw new \InvalidArgumentException("Wrong type!");
         }
         $conn = $this->connection->getConn();
         try{
-            $name_participant = $newModel->Name_participant;
-            $roleId = $newModel->RoleId;
-            $update = "UPDATE `participant` SET Name_participant='$name_participant',RoleId='$roleId' WHERE Id='$id'";
+            $login = $newModel->login;
+            $pass = $newModel->password;
+            $subscription = $newModel->subscriptionId;
+            $update = "UPDATE `authorization` SET login='$login',password='$pass',$subscription='$subscription' WHERE Id='$id'";
             if($conn->query($update)){
                 echo '<p>updated!</p>';
             }
@@ -79,7 +80,7 @@ class ParticipantController extends Controller {
     }
     public function updateByModel($oldModel, $newModel)
     {
-        if(!($oldModel instanceof participant))
+        if(!($oldModel instanceof authorization))
             throw new \InvalidArgumentException("Wrong type!");
         $id = $oldModel->Id;
         $this->updateById($id, $newModel);
@@ -89,23 +90,26 @@ class ParticipantController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `participant` WHERE id='$id'";
+            $select = "SELECT * FROM `authorization` WHERE id='$id'";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name_participant</th>
-                        <th>RoleId</th>
+                        <th>login</th>
+                         <th>password</th>
+                          <th>subscription</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
+                    '<td>'.$iter['login'].'</td>'.
+                    '<td>'.$iter['password'].'</td>'.
+                    '<td>'.$iter['subscriptionId'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
             $res->free();
+
         }
         catch (InvalidArgumentException)
         {
@@ -120,23 +124,26 @@ class ParticipantController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `participant` WHERE $text";
+            $select = "SELECT * FROM `authorization` WHERE $text";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name_participant</th>
-                        <th>RoleId</th>
+                        <th>login</th>
+                         <th>password</th>
+                          <th>subscription</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
+                    '<td>'.$iter['login'].'</td>'.
+                    '<td>'.$iter['password'].'</td>'.
+                    '<td>'.$iter['subscriptionId'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
             $res->free();
+
         }
         catch (InvalidArgumentException)
         {
@@ -151,19 +158,21 @@ class ParticipantController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `participant`";
+            $select = "SELECT * FROM `authorization`";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name_participant</th>
-                        <th>RoleId</th>
+                        <th>login</th>
+                         <th>password</th>
+                          <th>subscription</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
+                    '<td>'.$iter['login'].'</td>'.
+                    '<td>'.$iter['password'].'</td>'.
+                    '<td>'.$iter['subscriptionId'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
@@ -177,5 +186,6 @@ class ParticipantController extends Controller {
             $conn->close();
         }
     }
+
 }
 ?>

@@ -1,42 +1,34 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'orm/Controllers/Controller.php';
-include_once  'orm/Models/subscription.php';
-class SubscriptionController extends Controller {
-    public function add($model){
-        if(!($model instanceof subscription))
-            throw new \InvalidArgumentException("Wrong type!");
-
+include_once 'db/Controllers/Controller.php';
+include_once 'db/Models/role.php';
+class RoleController extends Controller {
+    public function add($model)
+    {
+        if(!($model instanceof role))
+        {throw new \InvalidArgumentException("Wrong type!");}
         $conn = $this->connection->getConn();
-
         try
         {
-            $name = $model->Name;
-
-            $sql_ins = "INSERT INTO `subscription` (Name) VALUES ('$name')";
-
-            if($conn->query($sql_ins)){
+            $name_role = $model->Name_role;
+            $sql_ins = "INSERT INTO `role` (Name_role) VALUES ('$name_role')";
+            if($conn->query($sql_ins)) {
                 echo '<p>added!</p>';
             }
             else{
-                echo '<p>Not deleted!</p>';
+                echo '<p>Not added!</p>';
             }
         }
-        catch (InvalidArgumentException)
-        {
+        catch (InvalidArgumentException) {
             echo '<p>Database error</p>';
         }
-        finally {
-            $conn?->close();
-        }
+        finally {$conn?->close();}
     }
     public function removeById($id)
     {
         $conn = $this->connection->getConn();
-
         try {
-            $del = "DELETE FROM `subscription` WHERE Id='$id';";
-
+            $del = "DELETE FROM `role` WHERE Id='$id';";
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
@@ -52,21 +44,27 @@ class SubscriptionController extends Controller {
             $conn->close();
         }
     }
+    public function removeByModel($model)
+    {
+        if(!($model instanceof role))
+            throw new \InvalidArgumentException("Wrong type!");
+        $id = $model->Id;
+        $this->removeById($id);
+    }
     public function updateById($id, $newModel)
     {
-        if(!($newModel instanceof subscription))
+        if(!($newModel instanceof role)) {
             throw new \InvalidArgumentException("Wrong type!");
-
+        }
         $conn = $this->connection->getConn();
-
-        try {
-            $name = $newModel->Name;
-            $upd = "UPDATE `subscription` SET Name='$name' WHERE Id='$id'";
-            if($conn->query($upd)){
+        try{
+            $name_role = $newModel->Name_role;
+            $update = "UPDATE `role` SET Name_role='$name_role' WHERE Id='$id'";
+            if($conn->query($update)){
                 echo '<p>updated!</p>';
             }
             else{
-                echo '<p>Not deleted!</p>';
+                echo '<p>Not updated!</p>';
             }
         }
         catch (InvalidArgumentException)
@@ -77,16 +75,9 @@ class SubscriptionController extends Controller {
             $conn->close();
         }
     }
-    public function removeByModel($model)
-    {
-        if(!($model instanceof subscription))
-            throw new \InvalidArgumentException("Wrong type!");
-        $id = $model->Id;
-        $this->removeById($id);
-    }
     public function updateByModel($oldModel, $newModel)
     {
-        if(!($oldModel instanceof subscription))
+        if(!($oldModel instanceof role))
             throw new \InvalidArgumentException("Wrong type!");
         $id = $oldModel->Id;
         $this->updateById($id, $newModel);
@@ -96,22 +87,21 @@ class SubscriptionController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `subscription` WHERE id='$id'";
+            $select = "SELECT * FROM `role` WHERE id='$id'";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th>Name_role</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['Name'].'</td>'.
+                    '<td>'.$iter['Name_role'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
             $res->free();
-
         }
         catch (InvalidArgumentException)
         {
@@ -126,17 +116,17 @@ class SubscriptionController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `subscription` WHERE ".$text;
+            $select = "SELECT * FROM `role` WHERE $text";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th>Name_role</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['Name'].'</td>'.
+                    '<td>'.$iter['Name_role'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";
@@ -155,17 +145,17 @@ class SubscriptionController extends Controller {
         $conn = $this->connection->getConn();
 
         try {
-            $select = "SELECT * FROM `subscription`";
+            $select = "SELECT * FROM `role`";
             $res = $conn->query($select);
             echo "<table>
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th>Name_role</th>
                     </tr>";
             foreach ($res as $iter) {
                 echo '<tr>'.
-                        '<td>'.$iter['Id'].'</td>'.
-                        '<td>'.$iter['Name'].'</td>'.
+                    '<td>'.$iter['Id'].'</td>'.
+                    '<td>'.$iter['Name_role'].'</td>'.
                     '</tr>';
             }
             echo    "</table>";

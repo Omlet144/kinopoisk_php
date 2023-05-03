@@ -1,13 +1,13 @@
 <?php
-include_once 'orm/db.php';
-include_once 'orm/db_context.php';
+include_once 'db/db.php';
+include_once 'db/db_context.php';
 
-include_once 'orm/Models/subscription.php';
-include_once 'orm/Models/ganre.php';
-include_once 'orm/Models/role.php';
-include_once 'orm/Models/authorization.php';
-include_once 'orm/Models/movie.php';
-include_once 'orm/Models/participant.php';
+include_once 'db/Models/subscription.php';
+include_once 'db/Models/ganre.php';
+include_once 'db/Models/role.php';
+include_once 'db/Models/authorization.php';
+include_once 'db/Models/movie.php';
+include_once 'db/Models/participant.php';
 
 $db = new db();
 $db_context = new db_context($db);
