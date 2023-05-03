@@ -10,7 +10,7 @@ class subscription{
 
     public function __toString()
     {
-        return  'Id: '.$this->Id.'; '.'Name: '.$this->Name_subscription.';';
+        return  'Id: '.$this->Id.';</br>'.'Name: '.$this->Name_subscription.';</br>';
     }
 }
 ?>
