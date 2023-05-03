@@ -8,7 +8,9 @@ class db{
     }
     public function getConn(): mysqli
     {
+
         return $this->conn;
+
     }
 }
 ?>
