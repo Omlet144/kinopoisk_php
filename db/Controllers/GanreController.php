@@ -1,7 +1,7 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'db/Controllers/Controller.php';
-include_once 'db/Models/ganre.php';
+include_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\Controller.php';
+include_once 'C:\xampp\htdocs\kinopoisk_php\db\Models\ganre.php';
 class GanreController extends Controller {
     public function add($model)
     {

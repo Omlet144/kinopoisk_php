@@ -1,7 +1,7 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'db/Controllers/Controller.php';
-include_once 'db/Models/role.php';
+include_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\Controller.php';
+include_once 'C:\xampp\htdocs\kinopoisk_php\db\Models\role.php';
 class RoleController extends Controller {
     public function add($model)
     {

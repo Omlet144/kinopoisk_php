@@ -1,7 +1,7 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'db/Controllers/Controller.php';
-include_once 'db/Models/participant.php';
+include_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\Controller.php';
+include_once 'C:\xampp\htdocs\kinopoisk_php\db\Models\participant.php';
 class ParticipantController extends Controller {
     public function add($model)
     {
@@ -100,7 +100,7 @@ class ParticipantController extends Controller {
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
+                    '<td>'.$iter['Name_participant'].'</td>'.
                     '<td>'.$iter['RoleId'].'</td>'.
                     '</tr>';
             }
@@ -131,7 +131,7 @@ class ParticipantController extends Controller {
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
+                    '<td>'.$iter['Name_participant'].'</td>'.
                     '<td>'.$iter['RoleId'].'</td>'.
                     '</tr>';
             }
@@ -162,7 +162,7 @@ class ParticipantController extends Controller {
             foreach ($res as $iter) {
                 echo '<tr>'.
                     '<td>'.$iter['Id'].'</td>'.
-                    '<td>'.$iter['RoleId'].'</td>'.
+                    '<td>'.$iter['Name_participant'].'</td>'.
                     '<td>'.$iter['RoleId'].'</td>'.
                     '</tr>';
             }
@@ -175,6 +175,26 @@ class ParticipantController extends Controller {
         }
         finally {
             $conn->close();
+        }
+    }
+
+    public function findByName($name)
+    {
+        $conn = $this->connection->getConn();
+
+        try {
+            $select = "SELECT * FROM `participant` WHERE Name_participant = '$name'";
+            $res = $conn->query($select);
+            $result = null;
+            foreach ($res as $iter) {
+                $result = $iter['Id'];
+            }
+            return $result;
+            $conn->free();
+        }
+        catch (Exception $ex)
+        {
+            echo '<p>Database error</p>';
         }
     }
 }

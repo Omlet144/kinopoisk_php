@@ -1,10 +1,10 @@
 <?php
-include_once 'db/Controllers/AuthorizationController.php';
-include_once 'db/Controllers/SubscriptionController.php';
-include_once 'db/Controllers/GanreController.php';
-include_once 'db/Controllers/ParticipantController.php';
-include_once 'db/Controllers/MovieControllers.php';
-include_once 'db/Controllers/RoleController.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\AuthorizationController.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\SubscriptionController.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\GanreController.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\ParticipantController.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\MovieControllers.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\RoleController.php';
 class db_context{
     private $conn;
     private $authorizationController;

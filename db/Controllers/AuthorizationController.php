@@ -1,7 +1,7 @@
 <link href="../../style.css" rel="stylesheet">
 <?php
-include_once 'db/Controllers/Controller.php';
-include_once 'db/Models/authorization.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Controllers\Controller.php';
+require_once 'C:\xampp\htdocs\kinopoisk_php\db\Models\authorization.php';
 class AuthorizationController extends Controller {
     public function add($model){
         if(!($model instanceof authorization))
