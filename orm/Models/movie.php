@@ -31,5 +31,26 @@ class movie{
             .'IMDB: '.$this->IMDB.';</br>'
             .'Subscription Id'.$this->SubscriptionId.';</br>';
     }
+
+    public function equals($model)
+    {
+        if(gettype($model) == gettype($this)){
+            if(get_class($model) == get_class($this)){
+                if(
+                    $this->Name_movie == $model->Name_movie &&
+                    $this->Country == $model->Country &&
+                    $this->ParticipantId == $model->ParticipantId &&
+                    $this->GanreId == $model-> GanreId &&
+                    $this->Year == $model-> Year &&
+                    $this->IMDB == $model-> IMDB &&
+                    $this->SubscriptionId == $model->SubscriptionId
+                )
+                {return true;}
+                else{return false;}
+            }
+            else{return false;}
+        }
+        else{return false;}
+    }
 }
 ?>

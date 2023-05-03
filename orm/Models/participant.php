@@ -15,5 +15,18 @@ class participant{
         return  'Id: '.$this->Id.';</br>'
             .'Name: '.$this->Name.';</br>';
     }
+
+    public function equals($model)
+    {
+        if(gettype($model) == gettype($this)){
+            if(get_class($model) == get_class($this)){
+                if($this->Name_participant == $model->Name_participant && $this->RoleId == $model->RoleId)
+                {return true;}
+                else{return false;}
+            }
+            else{return false;}
+        }
+        else{return false;}
+    }
 }
 ?>

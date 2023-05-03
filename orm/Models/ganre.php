@@ -13,5 +13,19 @@ class ganre{
         return  'Id: '.$this->Id.';</br>'
             .'Name genre: '.$this->Name.';</br>';
     }
+
+    public function equals($model)
+    {
+        if(gettype($model) == gettype($this)){
+            if(get_class($model) == get_class($this)){
+                if($this->Name == $model->Name){
+                    return true;
+                }
+                else{return false;}
+            }
+            else{return false;}
+        }
+        else{return false;}
+    }
 }
 ?>

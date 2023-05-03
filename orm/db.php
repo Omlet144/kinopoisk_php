@@ -1,9 +1,14 @@
 <?php
 class db{
-public $conn;
-public function getConn(){
-    $this->conn = new mysqli("localhost", "root", "", "kinopoisk");
-}
+    private $conn;
 
+    function __construct()
+    {
+        $this->conn = new mysqli("localhost", "root", "", "kinopoisk");
+    }
+    public function getConn(): mysqli
+    {
+        return $this->conn;
+    }
 }
 ?>
